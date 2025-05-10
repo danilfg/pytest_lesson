@@ -1,0 +1,6 @@
+.DS_Store
+.env.test
+*.pyc
+/.venv
+/.idea
+/__pycache__
