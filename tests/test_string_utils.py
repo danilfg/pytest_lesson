@@ -1,8 +1,14 @@
 from contextlib import nullcontext
 
+import allure
 import pytest
 
 from src.string_utils import StringUtils
+
+pytestmark = [
+    allure.parent_suite("Тестирование собственных функций"),
+    allure.suite("Тестирвоание работы со строками"),
+]
 
 
 class TestStringUtils:
@@ -14,6 +20,7 @@ class TestStringUtils:
             ("123", "321"),
         ],
     )
+    @allure.title("Проверка обратной строки - позитивные кейсы")
     def test_reverse_string(self, input_str, expected):
         utils = StringUtils()
         assert utils.reverse_string(input_str) == expected
@@ -27,6 +34,7 @@ class TestStringUtils:
                 (None, pytest.raises(TypeError)),
             ],
         )
+        @allure.title("Проверка обратной строки - негативные кейсы")
         def test_reverse_string_errors(self, input_str, expected):
             utils = StringUtils()
             with expected:
@@ -40,6 +48,7 @@ class TestStringUtils:
             ("", pytest.raises(ValueError)),
         ],
     )
+    @allure.title("Проверка получения инициалов")
     def test_get_initials(self, full_name, expected):
         utils = StringUtils()
         if isinstance(expected, str):
