@@ -1,9 +1,26 @@
 import pytest
+from playwright.sync_api import sync_playwright
 
 from clients.booking_client import BookingClient
 from models.booking import Booking, BookingDates
-from src.constant import BookingData
+from src.constant import BASE_URL, BookingData
 from src.settings import settings
+
+
+@pytest.fixture(scope="session")
+def base_url():
+    return BASE_URL
+
+
+@pytest.fixture(scope="session")
+def page():
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False)
+        context = browser.new_context()
+        page = context.new_page()
+        yield page
+        context.close()
+        browser.close()
 
 
 @pytest.fixture
